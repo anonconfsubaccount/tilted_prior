@@ -22,8 +22,7 @@ class Loss(nn.Module):
     def forward(self, x, x_out, mu, logvar, ood=False):
         # recon loss options
         if self.loss_type == 'l2':
-            #recon = torch.sum(torch.square(x - x_out), dim=(1,2,3))
-            recon = torch.linalg.norm(x - x_out, dim=(1,2,3))
+            recon = torch.sum(torch.square(x - x_out), dim=(1,2,3))
             if not ood: # batch support for aucroc testing
                 recon = torch.mean(recon) 
         elif self.loss_type == 'cross_entropy':    
